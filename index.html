@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Life Dashboard — Analisis hidupmu dalam satu halaman"/>
+  <title>Life Dashboard</title>
+
+  <!-- Chart.js & html2canvas CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Stylesheets (order matters) -->
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/layout.css"/>
+  <link rel="stylesheet" href="css/components.css"/>
+  <link rel="stylesheet" href="css/export.css"/>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="header">
+  <a class="logo" href="#">
+    <div class="logo-icon">🌆</div>
+    <span class="logo-text">Life Dashboard</span>
+    <span class="logo-badge">v2</span>
+  </a>
+
+  <nav class="nav">
+    <button class="tab-btn active" data-tab="music">🎵 Musik</button>
+    <button class="tab-btn" data-tab="life">🗓 Hidup</button>
+    <button class="tab-btn" data-tab="writing">💬 Tulisan</button>
+    <button class="tab-btn" data-tab="screen">📱 Screen</button>
+    <button class="tab-btn" data-tab="mood">🌆 Mood</button>
+  </nav>
+
+  <div class="header-actions">
+    <button class="btn-header-primary" id="btn-export">✦ Generate Card</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     MAIN
+══════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ── TAB: MUSIK ──────────────────────────────────────── -->
+  <div class="tab-panel active" id="tab-music">
+    <div class="page-head">
+      <div class="page-head-left">
+        <h1><span class="dot" style="background:#e8923a"></span>DNA Musikmu</h1>
+        <p>Pilih genre favorit untuk menemukan kepribadian musikmu.</p>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div>
+        <div class="card card-accent-amber">
+          <div class="card-label">Genre Favorit</div>
+          <div class="chips" id="genre-chips"></div>
+
+          <div class="field">
+            <label>Mood musik hari ini</label>
+            <select id="music-mood">
+              <option value="">Pilih mood…</option>
+              <option value="hype">🔥 Hype / Energetik</option>
+              <option value="chill">😌 Chill / Santai</option>
+              <option value="sad">💙 Melankolis</option>
+              <option value="focus">🎯 Fokus</option>
+              <option value="happy">😄 Gembira</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Artis favorit (pisah koma)</label>
+            <input type="text" id="music-artists" placeholder="Contoh: Hindia, Pamungkas, Tulus"/>
+          </div>
+
+          <button class="btn btn-amber" id="btn-music">Analisis →</button>
+        </div>
+
+        <div class="result" id="music-result">
+          <div class="card">
+            <div id="music-badge"></div>
+            <p id="music-desc" style="font-size:.83rem;color:var(--text-2);margin-bottom:14px"></p>
+            <div class="g-3" id="music-stats"></div>
+            <div class="divider"></div>
+            <div id="music-bars"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Distribusi Genre</div>
+        <div class="chart-wrap"><canvas id="music-chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: HIDUP ──────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-life">
+    <div class="page-head">
+      <div class="page-head-left">
+        <h1><span class="dot" style="background:#4d8fe0"></span>Hidupmu dalam Kotak</h1>
+        <p>Setiap kotak kecil mewakili satu minggu hidupmu.</p>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div>
+        <div class="card card-accent-blue">
+          <div class="card-label">Data Diri</div>
+
+          <div class="field">
+            <label>Tanggal lahir</label>
+            <input type="date" id="birthdate"/>
+          </div>
+
+          <div class="field">
+            <label>Ekspektasi umur (tahun)</label>
+            <input type="number" id="life-expect" value="80" min="40" max="120"/>
+          </div>
+
+          <button class="btn btn-blue" id="btn-life">Visualisasikan →</button>
+        </div>
+
+        <div class="result show" id="life-result">
+          <div class="card">
+            <div class="g-3" id="life-stats"></div>
+            <div class="divider"></div>
+            <div id="life-notes"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Peta Minggu Hidupmu</div>
+        <div style="display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--text-3)">
+            <div style="width:9px;height:9px;background:#e8923a;border-radius:2px;opacity:.8"></div>Masa muda
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--text-3)">
+            <div style="width:9px;height:9px;background:#4d8fe0;border-radius:2px;opacity:.8"></div>Dewasa
+          </div>
+          <div style="display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--text-3)">
+            <div style="width:9px;height:9px;background:#2eb8a0;border-radius:2px;opacity:.35"></div>Tersisa
+          </div>
+        </div>
+        <div class="life-grid" id="life-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: TULISAN ────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-writing">
+    <div class="page-head">
+      <div class="page-head-left">
+        <h1><span class="dot" style="background:#2eb8a0"></span>Kepribadian Tulisanmu</h1>
+        <p>Paste teks apapun dan temukan pola di balik cara kamu menulis.</p>
+      </div>
+    </div>
+
+    <div class="card card-accent-teal">
+      <div class="card-label">Teks Kamu</div>
+      <div class="field">
+        <textarea id="writing-input" placeholder="Paste atau tulis teksmu di sini… minimal 50 kata untuk hasil terbaik. Bisa caption, essay, curhatan, atau apapun."></textarea>
+      </div>
+      <button class="btn btn-teal" id="btn-writing">Analisis →</button>
+    </div>
+
+    <div class="result" id="writing-result">
+      <div class="g-2">
+        <div class="card">
+          <div class="card-label">Kepribadian</div>
+          <div id="writing-badge"></div>
+          <p id="writing-desc" style="font-size:.83rem;color:var(--text-2);margin-bottom:14px"></p>
+          <div class="g-3" id="writing-stats"></div>
+        </div>
+        <div class="card">
+          <div class="card-label">Kata Paling Sering</div>
+          <div class="word-cloud" id="writing-wordcloud"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Skor Analisis</div>
+        <div id="writing-bars"></div>
+      </div>
+      <div id="writing-note"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB: SCREEN ─────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-screen">
+    <div class="page-head">
+      <div class="page-head-left">
+        <h1><span class="dot" style="background:#d95040"></span>Cerita Screen Timemu</h1>
+        <p>Berapa jam hari ini kamu habiskan di tiap kategori?</p>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div>
+        <div class="card card-accent-red">
+          <div class="card-label">Input Hari Ini</div>
+          <div id="screen-rows"></div>
+          <button class="btn btn-red" id="btn-screen" style="margin-top:14px">Analisis →</button>
+        </div>
+
+        <div class="result" id="screen-result">
+          <div class="card">
+            <div class="g-3" id="screen-stats"></div>
+            <div class="divider"></div>
+            <div id="screen-story"></div>
+            <div class="divider"></div>
+            <div id="screen-wellness"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Distribusi Waktu</div>
+        <div class="chart-wrap"><canvas id="screen-chart"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB: MOOD ───────────────────────────────────────── -->
+  <div class="tab-panel" id="tab-mood">
+    <div class="page-head">
+      <div class="page-head-left">
+        <h1><span class="dot" style="background:#8b6fd4"></span>Hari Ini dalam Warna</h1>
+        <p>Setiap aktivitasmu punya warna — bersama mereka membentuk palette harimu.</p>
+      </div>
+    </div>
+
+    <div class="g-2">
+      <div>
+        <div class="card card-accent-purple">
+          <div class="card-label">Aktivitas Hari Ini</div>
+          <div class="check-grid" id="mood-checks"></div>
+
+          <div class="field">
+            <label>Satu kalimat tentang harimu</label>
+            <input type="text" id="mood-text" placeholder="Hari ini gue ngerasa…"/>
+          </div>
+
+          <button class="btn btn-purple" id="btn-mood">Generate Palette →</button>
+        </div>
+
+        <div class="result" id="mood-result">
+          <div class="card">
+            <div id="mood-badge"></div>
+            <p id="mood-desc" style="font-size:.83rem;color:var(--text-2);margin-bottom:12px"></p>
+            <div id="mood-bar"></div>
+            <div class="divider"></div>
+            <div class="g-3" id="mood-stats"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Palette Harimu</div>
+        <div class="palette" id="mood-palette">
+          <div class="palette-swatch" style="background:var(--surface-2)"></div>
+        </div>
+        <div id="mood-palette-label" style="font-size:.72rem;color:var(--text-3);margin-top:6px;line-height:1.6"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       EXPORT CARD
+  ══════════════════════════════════════════ -->
+  <div id="export-wrap">
+
+    <!-- This div gets captured by html2canvas -->
+    <div id="export-card">
+      <div class="ec-header">
+        <div class="ec-header-left">
+          <div class="ec-title">Life <span>Dashboard</span></div>
+          <div class="ec-subtitle" id="ec-filled">0/5 analisis</div>
+        </div>
+        <div class="ec-header-right">
+          <div class="ec-header-date" id="ec-date"></div>
+        </div>
+      </div>
+
+      <div class="ec-grid">
+        <!-- Music -->
+        <div class="ec-section" id="ecs-music">
+          <div class="ec-s-icon">🎵</div>
+          <div class="ec-s-label">Musik</div>
+          <div class="ec-s-value">—</div>
+          <div class="ec-s-content"></div>
+        </div>
+
+        <!-- Life -->
+        <div class="ec-section" id="ecs-life">
+          <div class="ec-s-icon">🗓</div>
+          <div class="ec-s-label">Hidup</div>
+          <div class="ec-s-value">—</div>
+          <div class="ec-s-content"></div>
+        </div>
+
+        <!-- Writing -->
+        <div class="ec-section" id="ecs-writing">
+          <div class="ec-s-icon">💬</div>
+          <div class="ec-s-label">Tulisan</div>
+          <div class="ec-s-value">—</div>
+          <div class="ec-s-content"></div>
+        </div>
+
+        <!-- Screen -->
+        <div class="ec-section" id="ecs-screen">
+          <div class="ec-s-icon">📱</div>
+          <div class="ec-s-label">Screen</div>
+          <div class="ec-s-value">—</div>
+          <div class="ec-s-content"></div>
+        </div>
+
+        <!-- Mood -->
+        <div class="ec-section" id="ecs-mood">
+          <div class="ec-s-icon">🌆</div>
+          <div class="ec-s-label">Mood</div>
+          <div class="ec-s-value">—</div>
+          <div class="ec-s-content"></div>
+        </div>
+      </div>
+
+      <div class="ec-footer">
+        <div class="ec-footer-brand">LIFE.DASHBOARD</div>
+        <div class="ec-footer-url">lifedashboard.app</div>
+      </div>
+    </div>
+
+    <!-- Action buttons (not captured) -->
+    <div class="ec-actions">
+      <button class="ec-btn-download" id="btn-download">↓ Download PNG</button>
+      <button class="ec-btn-back"     id="btn-back">↑ Kembali</button>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ES Module entry point -->
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

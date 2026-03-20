@@ -1,0 +1,102 @@
+/**
+ * base.css — Reset, CSS Variables, Typography
+ * Theme: Urban City Night
+ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&family=Playfair+Display:ital@1&display=swap');
+
+/* ── Variables ────────────────────────────────────────────── */
+:root {
+  /* City night palette */
+  --bg:        #0f1117;      /* asphalt dark */
+  --surface:   #161b27;      /* building concrete */
+  --surface-2: #1e2435;      /* raised surface */
+  --border:    #252d3d;      /* steel lines */
+  --border-2:  #2e3850;      /* lighter border */
+
+  /* Text */
+  --text:    #e8eaf0;        /* neon-lit white */
+  --text-2:  #9aa0b4;        /* dimmed text */
+  --text-3:  #5a6278;        /* faint label */
+
+  /* City accent colors — streetlights & neon signs */
+  --amber:   #e8923a;        /* sodium streetlight */
+  --amber-2: #c47328;        /* deeper amber */
+  --amber-bg: rgba(232,146,58,.08);
+
+  --blue:    #4d8fe0;        /* office window blue */
+  --blue-2:  #3470c0;
+  --blue-bg: rgba(77,143,224,.08);
+
+  --teal:    #2eb8a0;        /* traffic signal teal */
+  --teal-bg: rgba(46,184,160,.08);
+
+  --red:     #d95040;        /* brake lights */
+  --red-bg:  rgba(217,80,64,.08);
+
+  --purple:  #8b6fd4;        /* neon purple */
+  --purple-bg: rgba(139,111,212,.08);
+
+  /* Typography */
+  --font:      'DM Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-serif:'Playfair Display', Georgia, serif;
+
+  /* Spacing */
+  --radius:    10px;
+  --radius-lg: 14px;
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+  /* Subtle city grid overlay */
+  background-image:
+    linear-gradient(rgba(77,143,224,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77,143,224,.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+h1, h2, h3 { line-height: 1.2; }
+
+.t-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+}
+
+.t-muted  { color: var(--text-2); }
+.t-faint  { color: var(--text-3); }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
+
+/* ── Selection ────────────────────────────────────────────── */
+::selection { background: var(--amber-bg); color: var(--amber); }
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(232,146,58,.2); }
+  50%       { box-shadow: 0 0 18px rgba(232,146,58,.35); }
+}

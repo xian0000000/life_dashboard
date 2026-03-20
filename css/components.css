@@ -1,0 +1,419 @@
+/**
+ * components.css — Reusable UI components
+ * Cards, Buttons, Inputs, Badges, Progress, Tags, Stats
+ */
+
+/* ── CARD ─────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card:last-child { margin-bottom: 0; }
+
+.card-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-label::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 10px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+/* Colored card accent on left edge */
+.card-accent-amber { border-left: 2px solid var(--amber); }
+.card-accent-blue  { border-left: 2px solid var(--blue); }
+.card-accent-teal  { border-left: 2px solid var(--teal); }
+.card-accent-red   { border-left: 2px solid var(--red); }
+.card-accent-purple{ border-left: 2px solid var(--purple); }
+
+/* ── RESULT WRAPPER ───────────────────────────────────────── */
+.result { display: none; }
+.result.show { display: block; animation: fadeUp 0.25s ease; }
+
+/* ── BUTTONS ──────────────────────────────────────────────── */
+.btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+  margin-top: 6px;
+}
+
+.btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-amber  { background: var(--amber);  color: #0f0e0c; }
+.btn-blue   { background: var(--blue);   color: #fff;    }
+.btn-teal   { background: var(--teal);   color: #0a1210; }
+.btn-red    { background: var(--red);    color: #fff;    }
+.btn-purple { background: var(--purple); color: #fff;    }
+
+/* Header button */
+.btn-header {
+  background: var(--surface-2);
+  border: 1px solid var(--border-2);
+  color: var(--text-2);
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.btn-header:hover { border-color: var(--amber); color: var(--amber); }
+
+/* Primary header button */
+.btn-header-primary {
+  background: var(--amber);
+  border: none;
+  color: #0f0e0c;
+  font-family: var(--font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-header-primary:hover { filter: brightness(1.08); }
+
+/* ── FORM FIELDS ──────────────────────────────────────────── */
+.field { margin-bottom: 13px; }
+
+.field label {
+  display: block;
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.87rem;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  resize: vertical;
+  -webkit-appearance: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px var(--amber-bg);
+}
+
+textarea { min-height: 110px; }
+
+select option { background: var(--surface); }
+
+/* ── STAT BOX ─────────────────────────────────────────────── */
+.stat {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle glow top line */
+.stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.2;
+  border-radius: 1px;
+}
+
+.stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-lbl {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+/* ── PROGRESS BAR ─────────────────────────────────────────── */
+.prog { margin-bottom: 11px; }
+
+.prog-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.77rem;
+  margin-bottom: 5px;
+  color: var(--text-2);
+}
+
+.prog-row span:last-child {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-3);
+}
+
+.prog-track {
+  height: 5px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Shimmer on progress fill */
+.prog-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.18));
+}
+
+/* ── BADGE ────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+
+/* ── TAG ──────────────────────────────────────────────────── */
+.tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin: 2px;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
+}
+
+/* ── NOTE / INSIGHT ───────────────────────────────────────── */
+.note {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  font-size: 0.83rem;
+  line-height: 1.65;
+  color: var(--text-2);
+  border-left: 2px solid var(--border-2);
+  margin-bottom: 8px;
+}
+
+.note strong { color: var(--text); font-weight: 600; }
+
+/* ── CHIPS (genre selector) ───────────────────────────────── */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.chip {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+  font-family: var(--font-mono);
+}
+
+.chip:hover { border-color: var(--border-2); color: var(--text-2); }
+.chip.on    { color: #fff !important; border-color: transparent !important; }
+
+/* ── CHECK ITEMS (mood activities) ───────────────────────── */
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 5px;
+  margin-bottom: 13px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 9px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.check-item:hover { border-color: var(--border-2); color: var(--text); }
+.check-item.on    { border-color: currentColor; background: var(--surface-2); }
+
+.check-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border-2);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.check-item.on .check-dot { background: currentColor; }
+
+/* ── APP ROWS (screen time) ───────────────────────────────── */
+.app-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.app-row:last-child { border-bottom: none; }
+
+.app-row-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.app-row label   { flex: 1; font-size: 0.84rem; color: var(--text-2); }
+.app-row input   { width: 72px; text-align: center; }
+.app-row .unit   { font-size: 0.75rem; color: var(--text-3); font-family: var(--font-mono); }
+
+/* ── PALETTE (mood) ───────────────────────────────────────── */
+.palette {
+  display: flex;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+
+.palette-swatch {
+  flex: 1;
+  transition: flex 0.4s ease;
+}
+
+/* ── CHART WRAPPER ────────────────────────────────────────── */
+.chart-wrap { position: relative; height: 220px; }
+
+/* ── WORD CLOUD ───────────────────────────────────────────── */
+.word-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 2px 0;
+}
+
+/* ── LIFE GRID ────────────────────────────────────────────── */
+.life-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+.week-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 1.5px;
+  flex-shrink: 0;
+  transition: opacity 0.1s;
+}
+
+.week-dot:hover { opacity: 1 !important; }
+
+/* ── DIVIDER ──────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* ── SPACER ───────────────────────────────────────────────── */
+.sp-8  { height: 8px; }
+.sp-12 { height: 12px; }
+.sp-16 { height: 16px; }
